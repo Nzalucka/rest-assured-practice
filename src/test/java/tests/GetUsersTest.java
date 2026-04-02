@@ -10,16 +10,7 @@ import static org.testng.Assert.assertEquals;
 import static io.restassured.RestAssured.given;
 import static org.testng.Assert.assertNotNull;
 
-public class GetUsersTest {
-
-        @BeforeClass
-        public void setUp() {
-            RestAssured.baseURI = "https://reqres.in/api";
-            RestAssured.requestSpecification=
-                    given()
-                    .header("x-api-key",
-                    "reqres_a9db5cb7d8c849029d3ba03cf8e6ddb5");
-        }
+public class GetUsersTest extends BaseTest {
 
         @Test(description = "Get user — verify status code is 200")
         public void getUserStatusCode() {
