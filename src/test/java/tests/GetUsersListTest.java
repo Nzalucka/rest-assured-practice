@@ -39,6 +39,17 @@ public class GetUsersListTest extends BaseTest{
         int page=response.jsonPath().getInt("page");
         assertEquals(page,2,"page number should be 2");
     }
+    @Test(description = "Get users list page 2 — verify total users count")
+    public void getUsersListTotal(){
+        Response response=given()
+                .when().get("/users?page=2")
+                .then()
+                .statusCode(200)
+                .log().body()
+                .extract().response();
+        int totalUsers=response.jsonPath().getInt("total");
+        assertEquals(totalUsers,12,"totalUser number should be 12");
 
+    }
 
 }
