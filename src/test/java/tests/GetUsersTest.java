@@ -8,6 +8,7 @@ import io.restassured.response.Response;
 import static org.testng.Assert.assertEquals;
 
 import static io.restassured.RestAssured.given;
+import static org.testng.Assert.assertNotNull;
 
 public class GetUsersTest {
 
@@ -67,6 +68,18 @@ public class GetUsersTest {
                     .extract().response();
             String lastName=response.jsonPath().getString("data.last_name");
             assertEquals(lastName,"Weaver");
+    }
+    @Test(description = "Get user — verify avatar is not null")
+    public void getUserAvatar(){
+            Response response= given()
+                    .when()
+                    .get("/users/2")
+                    .then()
+                    .extract().response();
+
+            String avatar=response.jsonPath().getString("data.avatar");
+            assertNotNull(avatar,"Avatar should not be null");
+
     }
 
 
