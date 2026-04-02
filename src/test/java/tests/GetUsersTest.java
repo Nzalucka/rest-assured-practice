@@ -28,6 +28,18 @@ public class GetUsersTest {
                     .then()
                     .statusCode(200);
         }
+        @Test(description = "Get user — verify email")
+    public void getUserEmail(){
+         Response response=
+                    given()
+                    .when()
+                    .get("/users/2")
+                    .then()
+                    .statusCode(200)
+                    .extract().response();
+            String email=response.jsonPath().getString("data.email");
+            assertEquals(email,"janet.weaver@reqres.in","email doesnt exist");
+        }
 
         @Test(description = "Get user — verify email")
         public void getUserEmail(){
