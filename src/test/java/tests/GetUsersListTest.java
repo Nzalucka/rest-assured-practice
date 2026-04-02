@@ -16,5 +16,29 @@ public class GetUsersListTest extends BaseTest{
                         .statusCode(200)
                         .log().status();
     }
+    @Test(description = "Get users list page 2 — verify 6 users")
+    public void getUsersListSize() {
+        Response response=
+                given().when()
+                        .get("/users?page=2").then()
+                        .statusCode(200)
+                        .extract().response();
+
+        int listSize=response.jsonPath().getList("data").size();
+        assertEquals(listSize,6,
+                "list size should be 6");
+
+    }
+    @Test(description = "Get users list page 2 — verify page number")
+    public void getUsersListPageNumber() {
+        Response response=given()
+                .when().get("/users?page=2")
+                .then()
+                .statusCode(200)
+                .extract().response();
+        int page=response.jsonPath().getInt("page");
+        assertEquals(page,2,"page number should be 2");
+    }
+
 
 }
