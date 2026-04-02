@@ -29,6 +29,7 @@ public class GetUsersTest {
                     .statusCode(200);
         }
 
+
         @Test(description = "Get user — verify email")
         public void getUserEmail(){
          Response response=
