@@ -28,8 +28,9 @@ public class GetUsersTest {
                     .then()
                     .statusCode(200);
         }
+
         @Test(description = "Get user — verify email")
-    public void getUserEmail(){
+        public void getUserEmail(){
          Response response=
                     given()
                     .when()
@@ -40,5 +41,33 @@ public class GetUsersTest {
             String email=response.jsonPath().getString("data.email");
             assertEquals(email,"janet.weaver@reqres.in","email doesnt exist");
         }
+
+        @Test(description = "Get user - verify firstName")
+    public void getUserFirstName(){
+         Response response=
+                    given()
+                    .when()
+                    .get("/users/2")
+                    .then()
+                    .statusCode(200)
+                    .extract().response();
+            String firstName=response.jsonPath().getString("data.first_name");
+            assertEquals(firstName,"Janet","incorrect name");
+        }
+
+    @Test(description = "Get user - verify lastName")
+    public void getUserLastName(){
+          Response response=
+                    given()
+                    .when()
+                    .get("/users/2")
+                    .then()
+                    .statusCode(200)
+                    .extract().response();
+            String lastName=response.jsonPath().getString("data.last_name");
+            assertEquals(lastName,"Weaver");
+    }
+
+
 
 }
