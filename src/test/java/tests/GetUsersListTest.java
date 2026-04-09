@@ -72,5 +72,30 @@ public class GetUsersListTest extends BaseTest{
         int usersPerPage=response.jsonPath().getInt("per_page");
         assertEquals(usersPerPage,6,"per page number should be 6");
     }
+    @Test(description = "Get users list — verify first user email")
+    public void getFirstUserEmailFromList(){
+        Response response=
+                given().when().get("/users")
+                        .then().statusCode(200)
+                        .extract().response();
+        String firstUserEmailPage1=response.jsonPath().getString("data[0].email");
+        System.out.println("First user email: " + firstUserEmailPage1);
+        assertEquals(firstUserEmailPage1, "george.bluth@reqres.in",
+                "email should be george.bluth@reqres.in");
+    }
+
+    @Test(description = "Get users list — verify first user email — negative test")
+    public void getFirstUserEmailFromList_negative(){
+        Response response=
+                given().when().get("/users")
+                        .then().statusCode(200)
+                        .log().ifValidationFails()
+                        .extract().response();
+        String firstUserEmailPage1=response.jsonPath().getString("data[0].email");
+        System.out.println("First user email: " + firstUserEmailPage1);
+        assertEquals(firstUserEmailPage1, "george1.bluth@reqres.in",
+                "email should be george.bluth@reqres.in");
+    }
+
 
 }
