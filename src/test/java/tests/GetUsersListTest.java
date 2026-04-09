@@ -51,5 +51,26 @@ public class GetUsersListTest extends BaseTest{
         assertEquals(totalUsers,12,"totalUser number should be 12");
 
     }
+    @Test(description = "Get users list page 2 — verify total pages count")
+    public void getUsersListTotalPages(){
+        Response response=
+                given().when().get("/users?page=2")
+                        .then().statusCode(200)
+                        .log().body()
+                        .extract().response();
+        int totalPages=response.jsonPath().getInt("total_pages");
+        assertEquals(totalPages,2,"totalPages number should be 2");
+
+    }
+    @Test(description = "Get users list page 1 — verify users per page count")
+    public void getUsersListPerPage(){
+        Response response=
+                given().when().get("/users")
+                        .then().statusCode(200)
+                        .log().body()
+                        .extract().response();
+        int usersPerPage=response.jsonPath().getInt("per_page");
+        assertEquals(usersPerPage,6,"per page number should be 6");
+    }
 
 }
