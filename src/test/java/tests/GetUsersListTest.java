@@ -96,6 +96,16 @@ public class GetUsersListTest extends BaseTest{
         assertEquals(firstUserEmailPage1, "george1.bluth@reqres.in",
                 "email should be george.bluth@reqres.in");
     }
+    @Test(description = "Get users list — verify first user first name")
+    public void getFirstUserFirstNameFromList(){
+        Response response=
+                given().when().get("/users")
+                        .then().statusCode(200)
+                        .extract().response();
+        String firstName=response.jsonPath().getString("data[0].first_name");
+        System.out.println("First name: "+firstName);
+        assertEquals(firstName,"George", "first name should be George");
+    }
 
 
 }
