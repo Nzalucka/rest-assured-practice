@@ -107,5 +107,15 @@ public class GetUsersListTest extends BaseTest{
         assertEquals(firstName,"George", "first name should be George");
     }
 
+    @Test(description = "Get users list — verify first user last name")
+    public void getFirstUserLastNameFromList(){
+        Response response=
+                given().when().get("/users")
+                        .then().statusCode(200)
+                        .extract().response();
+        String lastName=response.jsonPath().getString("data[0].last_name");
+        System.out.println("First name: "+lastName);
+        assertEquals(lastName,"Bluth", "last name should be Bluth");
+    }
 
 }
