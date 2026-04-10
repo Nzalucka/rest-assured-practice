@@ -11,5 +11,14 @@ public class DeleteUserTest extends BaseTest{
              .when().delete("/users/2").then()
              .log().status().statusCode(204);
  }
+@Test(description = "Delete non-existent user — verify status 204 (reqres.in behavior)")
+    public void deleteNonExistentUser(){
+    given()
+            .when()
+            .delete("/users/999")
+            .then()
+            .log().status()
+            .statusCode(204);
 
+}
 }
