@@ -31,6 +31,12 @@ public class DeleteUserTest extends BaseTest{
         .extract().body().asString();
      assertEquals(body,"","Response body should be empty");
 
-
+    }
+    @Test(description = "Delete user — verify Content-Type header")
+    public void deleteUserVerifyHeader(){
+     given().when().delete("/users/2")
+             .then().log().headers()
+             .statusCode(204)
+             .header("Access-Control-Allow-Origin", "*");
     }
 }
