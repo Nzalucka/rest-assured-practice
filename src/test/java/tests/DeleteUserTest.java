@@ -3,6 +3,7 @@ package tests;
 import org.testng.annotations.Test;
 
 import static io.restassured.RestAssured.given;
+import static org.testng.Assert.assertEquals;
 
 public class DeleteUserTest extends BaseTest{
  @Test(description = "Delete user — verify status code 204")
@@ -21,4 +22,15 @@ public class DeleteUserTest extends BaseTest{
             .statusCode(204);
 
 }
+    @Test(description = "Delete user — verify response body is empty")
+    public void deleteUserEmptyBody() {
+     String body=
+             given().when().delete("/users/2").then().statusCode(204)
+                     .log()
+                     .body()
+        .extract().body().asString();
+     assertEquals(body,"","Response body should be empty");
+
+
+    }
 }
