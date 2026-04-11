@@ -1,8 +1,10 @@
 package tests;
 
+import io.restassured.response.Response;
 import org.testng.annotations.Test;
 
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.lessThan;
 import static org.testng.Assert.assertEquals;
 
 public class DeleteUserTest extends BaseTest{
@@ -38,5 +40,16 @@ public class DeleteUserTest extends BaseTest{
              .then().log().headers()
              .statusCode(204)
              .header("Access-Control-Allow-Origin", "*");
+    }
+    @Test(description = "Delete user — verify response time under 3 seconds")
+    public void deleteUserResponseTime() {
+        Response response=  given()
+                .when()
+                .delete("/users/2")
+                .then()
+                .statusCode(204)
+                .time(lessThan(1000L))
+                .extract().response();
+        System.out.println("Response time: "+response.getTime()+" ms");
     }
 }
