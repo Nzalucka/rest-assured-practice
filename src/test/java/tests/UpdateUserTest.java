@@ -2,6 +2,7 @@ package tests;
 
 import io.restassured.response.Response;
 import org.testng.annotations.Test;
+import utils.TestData;
 
 import static io.restassured.RestAssured.given;
 import static org.testng.Assert.assertEquals;
@@ -12,7 +13,8 @@ public class UpdateUserTest extends BaseTest{
     public void updateUser(){
         given()
                 .contentType("application/json")
-                .body("{\"name\": \"Natalia\", \"job\": \"QA Lead\"}")
+                // .body("{\"name\": \"Natalia\", \"job\": \"QA Lead\"}")
+                .body(TestData.updateUserBody("Natalia", "QA Lead"))
         .when().put("/users/2")
                 .then().statusCode(200);
 
@@ -21,7 +23,8 @@ public class UpdateUserTest extends BaseTest{
     public void updateUserVerifyName(){
         Response response=given()
                 .contentType("application/json")
-                .body("{\"name\": \"Natalia-Updated\", \"job\": \"QA Lead\"}")
+               // .body("{\"name\": \"Natalia-Updated\", \"job\": \"QA Lead\"}")
+                .body(TestData.updateUserBody("Natalia-Updated", "QA Lead"))
                 .when().put("/users/2")
                 .then().statusCode(200).log().body().extract().response();
 
@@ -33,7 +36,8 @@ public class UpdateUserTest extends BaseTest{
     public void updateUserVerifyjob(){
         Response response=
                 given().contentType("application/json")
-                        .body("{\"name\": \"Natalia-Updated\", \"job\": \"QA Senior\"}")
+                       // .body("{\"name\": \"Natalia-Updated\", \"job\": \"QA Senior\"}")
+                        .body(TestData.updateUserBody("Natalia-Updated","QA Senior"))
                         .when().put("/users/2")
                         .then().statusCode(200).extract().response();
         String job=response.jsonPath().getString("job");
@@ -45,7 +49,8 @@ public class UpdateUserTest extends BaseTest{
         Response response=
                 given()
                         .contentType("application/json")
-                        .body("{\"name\": \"Natalia-Updated\", \"job\": \"QA Senior\"}")
+                      //  .body("{\"name\": \"Natalia-Updated\", \"job\": \"QA Senior\"}")
+                        .body(TestData.updateUserBody("Natalia-Updated", "QA Senior"))
                         .when().put("/users/2")
                         .then().statusCode(200).extract().response();
         String updatedAt = response.jsonPath().getString("updatedAt");
