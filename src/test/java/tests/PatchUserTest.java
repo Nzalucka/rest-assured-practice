@@ -18,6 +18,11 @@ public class PatchUserTest extends BaseTest{
         System.out.println(job);
         assertEquals(job,"Analyst","job should be analyst");
     }
-
+    @Test(description = "Patch user — verify response with empty body")
+    public void patchUserEmptyBody(){
+        given().contentType("application/json")
+                .body("")
+                .when().patch("/users/2").then().log().all().statusCode(400);
+    }
 
 }
