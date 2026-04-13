@@ -20,13 +20,15 @@ public class UpdateUserTest extends BaseTest{
     public void updateUserVerifyName(){
         Response response=given()
                 .contentType("application/json")
-                .body("{\"name\": \"Natalia\", \"job\": \"QA Lead\"}")
+                .body("{\"name\": \"Natalia-Updated\", \"job\": \"QA Lead\"}")
                 .when().put("/users/2")
                 .then().statusCode(200).log().body().extract().response();
 
         String name=response.jsonPath().getString("name");
         System.out.println(name);
-        assertEquals(name,"Natalia","name should be Natalia");
+        assertEquals(name,"Natalia-Updated","name should be Natalia-Updated");
     }
+
+
 
 }
