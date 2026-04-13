@@ -2,6 +2,7 @@ package tests;
 
 import io.restassured.response.Response;
 import org.testng.annotations.Test;
+import utils.TestData;
 
 import static io.restassured.RestAssured.given;
 import static org.testng.Assert.assertEquals;
@@ -12,7 +13,8 @@ public class CreateUserTest extends BaseTest{
     public void createUserStatusCode(){
         given()
                 .contentType("application/json")
-                .body("{\"name\": \"Natalia\", \"job\": \"QA Engineer\"}")
+               // .body("{\"name\": \"Natalia\", \"job\": \"QA Engineer\"}")
+                .body(TestData.createUserBody())
                 .when()
                 .post("/users")
                 .then()
@@ -23,7 +25,8 @@ public class CreateUserTest extends BaseTest{
     public void createUserVerifyName() {
         Response response = given()
                 .contentType("application/json")
-                .body("{\"name\": \"Natalia\", \"job\": \"QA Engineer\"}")
+               // .body("{\"name\": \"Natalia\", \"job\": \"QA Engineer\"}")
+                .body(TestData.createUserBody())
                 .when()
                 .post("/users")
                 .then()
@@ -38,7 +41,8 @@ public class CreateUserTest extends BaseTest{
     public void createUserVerifyJob(){
         Response response = given()
                 .contentType("application/json")
-                .body("{\"name\": \"Natalia\", \"job\": \"QA Engineer\"}")
+               // .body("{\"name\": \"Natalia\", \"job\": \"QA Engineer\"}")
+                .body(TestData.createUserBody())
                         .when()
                 .post("/users")
                 .then()
@@ -54,7 +58,8 @@ public class CreateUserTest extends BaseTest{
     public void createUserVerifyIdNotNull(){
         Response response=given()
                 .contentType("application/json")
-                .body("{\"name\": \"Natalia\", \"job\": \"QA Engineer\"}")
+              //  .body("{\"name\": \"Natalia\", \"job\": \"QA Engineer\"}")
+                .body(TestData.createUserBody())
                 .when().post("/users")
                 .then().log().body().statusCode(201).extract().response();
         int id=response.jsonPath().getInt("id");
