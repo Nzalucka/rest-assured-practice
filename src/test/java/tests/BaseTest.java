@@ -9,7 +9,11 @@ public class BaseTest {
     @BeforeClass
     public void setUp() {
         RestAssured.baseURI = "https://reqres.in/api";
-        RestAssured.requestSpecification = given()
-                .header("x-api-key", "reqres_a9db5cb7d8c849029d3ba03cf8e6ddb5");
+        RestAssured.requestSpecification =
+                given()
+                .header("x-api-key", "reqres_a9db5cb7d8c849029d3ba03cf8e6ddb5")
+                        .contentType("application/json");
     }
+
+
 }

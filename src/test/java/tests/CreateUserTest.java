@@ -12,7 +12,6 @@ public class CreateUserTest extends BaseTest{
     @Test(description = "Create user — verify status code 201")
     public void createUserStatusCode(){
         given()
-                .contentType("application/json")
                // .body("{\"name\": \"Natalia\", \"job\": \"QA Engineer\"}")
                 .body(TestData.createUserBody())
                 .when()
@@ -24,7 +23,7 @@ public class CreateUserTest extends BaseTest{
     @Test(description = "Create user — verify name in response")
     public void createUserVerifyName() {
         Response response = given()
-                .contentType("application/json")
+
                // .body("{\"name\": \"Natalia\", \"job\": \"QA Engineer\"}")
                 .body(TestData.createUserBody())
                 .when()
@@ -40,7 +39,7 @@ public class CreateUserTest extends BaseTest{
     @Test(description = "Create user — verify job in response")
     public void createUserVerifyJob(){
         Response response = given()
-                .contentType("application/json")
+
                // .body("{\"name\": \"Natalia\", \"job\": \"QA Engineer\"}")
                 .body(TestData.createUserBody())
                         .when()
@@ -57,7 +56,7 @@ public class CreateUserTest extends BaseTest{
     @Test(description = "Create user — verify id is not null")
     public void createUserVerifyIdNotNull(){
         Response response=given()
-                .contentType("application/json")
+
               //  .body("{\"name\": \"Natalia\", \"job\": \"QA Engineer\"}")
                 .body(TestData.createUserBody())
                 .when().post("/users")

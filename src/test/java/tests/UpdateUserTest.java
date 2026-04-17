@@ -12,7 +12,7 @@ public class UpdateUserTest extends BaseTest{
     @Test(description = "Update user — verify status code 200")
     public void updateUser(){
         given()
-                .contentType("application/json")
+
                 // .body("{\"name\": \"Natalia\", \"job\": \"QA Lead\"}")
                 .body(TestData.updateUserBody("Natalia", "QA Lead"))
         .when().put("/users/2")
@@ -22,7 +22,7 @@ public class UpdateUserTest extends BaseTest{
     @Test(description = "Update user — verify name in response")
     public void updateUserVerifyName(){
         Response response=given()
-                .contentType("application/json")
+
                // .body("{\"name\": \"Natalia-Updated\", \"job\": \"QA Lead\"}")
                 .body(TestData.updateUserBody("Natalia-Updated", "QA Lead"))
                 .when().put("/users/2")
@@ -35,7 +35,8 @@ public class UpdateUserTest extends BaseTest{
     @Test(description = "Update user — verify job in response")
     public void updateUserVerifyjob(){
         Response response=
-                given().contentType("application/json")
+                given()
+
                        // .body("{\"name\": \"Natalia-Updated\", \"job\": \"QA Senior\"}")
                         .body(TestData.updateUserBody("Natalia-Updated","QA Senior"))
                         .when().put("/users/2")
@@ -48,7 +49,7 @@ public class UpdateUserTest extends BaseTest{
     public void updateUserVerifyUpdatedAt(){
         Response response=
                 given()
-                        .contentType("application/json")
+
                       //  .body("{\"name\": \"Natalia-Updated\", \"job\": \"QA Senior\"}")
                         .body(TestData.updateUserBody("Natalia-Updated", "QA Senior"))
                         .when().put("/users/2")
