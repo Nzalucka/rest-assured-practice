@@ -1,6 +1,7 @@
 package tests;
 
 import io.restassured.response.Response;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import utils.JsonReader;
 
@@ -27,5 +28,27 @@ public class CreateUserJsonTest extends BaseTest{
                 "Name should match JSON file");
     }
 
+    @DataProvider(name = "usersData")
+    public Object[][] provideUsersData() throws IOException {
+        return JsonReader.getUsersData();
+    }
+    @Test(description = "Create user — data driven from JSON",
+            dataProvider = "usersData")
+    public void createUserDataDriven(String name, String job) throws IOException {
+        Map<String, String> body = new HashMap<>();
+        body.put("name", name);
+        body.put("job", job);
+
+        Response response = given()
+                .body(body)
+                .when()
+                .post("/users")
+                .then()
+                .statusCode(201)
+                .extract().response();
+        String actualName=response.jsonPath().getString("name");
+        assertEquals(actualName,name,"Name should match");
+        System.out.println("Created user: " + name + " / " + job);
+    }
 
 }

@@ -22,4 +22,15 @@ public class JsonReader {
         body.put("job", getData("job"));
         return body;
     }
+    public static Object[][] getUsersData() throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode array = mapper.readTree(new File(FILE_PATH));
+
+        Object[][] data = new Object[array.size()][2];
+        for (int i = 0; i < array.size(); i++) {
+            data[i][0] = array.get(i).get("name").asText();
+            data[i][1] = array.get(i).get("job").asText();
+        }
+        return data;
+    }
 }
