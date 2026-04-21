@@ -1,6 +1,9 @@
 package tests;
 
-
+import io.qameta.allure.Description;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
+import io.qameta.allure.Story;
 import io.restassured.RestAssured;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -12,6 +15,10 @@ import static org.testng.Assert.assertNotNull;
 
 public class GetUsersTest extends BaseTest {
 
+
+        @Story("Get single user")
+        @Severity(SeverityLevel.NORMAL)
+        @Description("Verify that GET /users/2 returns status 200")
         @Test(description = "Get user — verify status code is 200")
         public void getUserStatusCode() {
             given()
