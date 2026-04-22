@@ -1,5 +1,9 @@
 package tests;
 
+import io.qameta.allure.Description;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
+import io.qameta.allure.Story;
 import io.restassured.response.Response;
 import org.testng.annotations.Test;
 import utils.TestData;
@@ -9,6 +13,10 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
 
 public class UpdateUserTest extends BaseTest{
+
+    @Story("Update user")
+    @Severity(SeverityLevel.NORMAL)
+    @Description("Verify that PUT /users/2 returns status 200")
     @Test(description = "Update user — verify status code 200")
     public void updateUser(){
         given()
@@ -19,6 +27,11 @@ public class UpdateUserTest extends BaseTest{
                 .then().statusCode(200);
 
     }
+
+
+    @Story("Update user")
+    @Severity(SeverityLevel.NORMAL)
+    @Description("Verify that PUT /users/2 returns updated name in response")
     @Test(description = "Update user — verify name in response")
     public void updateUserVerifyName(){
         Response response=given()
@@ -32,6 +45,11 @@ public class UpdateUserTest extends BaseTest{
         System.out.println(name);
         assertEquals(name,"Natalia-Updated","name should be Natalia-Updated");
     }
+
+
+    @Story("Update user")
+    @Severity(SeverityLevel.NORMAL)
+    @Description("Verify that PUT /users/2 returns updated job in response")
     @Test(description = "Update user — verify job in response")
     public void updateUserVerifyjob(){
         Response response=
@@ -45,6 +63,11 @@ public class UpdateUserTest extends BaseTest{
         System.out.println(job);
         assertEquals(job,"QA Senior","job should be QA Senior");
     }
+
+
+    @Story("Update user")
+    @Severity(SeverityLevel.NORMAL)
+    @Description("Verify that PUT /users/2 returns non-null updatedAt in response")
     @Test(description = "Update user — verify updatedAt is not null")
     public void updateUserVerifyUpdatedAt(){
         Response response=
