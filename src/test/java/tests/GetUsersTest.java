@@ -27,6 +27,19 @@ public class GetUsersTest extends BaseTest {
                     .then()
                     .statusCode(200);
         }
+    @Story("Get single user")
+    @Severity(SeverityLevel.NORMAL)
+    @Description("Verify GET /users/2 using ResponseSpecification")
+    @Test(description = "Get user — verify using response spec")
+    public void getUserWithResponseSpec(){
+            given()
+                    .when()
+                    .get("/users/2")
+                    .then()
+                    .spec(responseSpec);
+    }
+
+
 
         @Story("Get single user")
         @Severity(SeverityLevel.NORMAL)
