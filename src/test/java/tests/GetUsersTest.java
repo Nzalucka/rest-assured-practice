@@ -28,8 +28,10 @@ public class GetUsersTest extends BaseTest {
                     .statusCode(200);
         }
 
-
+        @Story("Get single user")
+        @Severity(SeverityLevel.NORMAL)
         @Test(description = "Get user — verify email")
+        @Description("Verify email of user 2")
         public void getUserEmail(){
          Response response=
                     given()
@@ -42,8 +44,11 @@ public class GetUsersTest extends BaseTest {
             assertEquals(email,"janet.weaver@reqres.in","email doesnt exist");
         }
 
+     @Story("Get single user")
+     @Severity(SeverityLevel.NORMAL)
+     @Description("Verify first name of user 2")
         @Test(description = "Get user - verify firstName")
-    public void getUserFirstName(){
+        public void getUserFirstName(){
          Response response=
                     given()
                     .when()
@@ -55,7 +60,10 @@ public class GetUsersTest extends BaseTest {
             assertEquals(firstName,"Janet","incorrect name");
         }
 
-    @Test(description = "Get user - verify lastName")
+    @Story("Get single user")
+    @Severity(SeverityLevel.NORMAL)
+    @Description("Verify last name of user 2")
+        @Test(description = "Get user - verify lastName")
     public void getUserLastName(){
           Response response=
                     given()
@@ -67,6 +75,11 @@ public class GetUsersTest extends BaseTest {
             String lastName=response.jsonPath().getString("data.last_name");
             assertEquals(lastName,"Weaver");
     }
+
+
+    @Story("Get single user")
+    @Severity(SeverityLevel.NORMAL)
+    @Description("Verify avatar is not null for user 2")
     @Test(description = "Get user — verify avatar is not null")
     public void getUserAvatar(){
             Response response= given()
