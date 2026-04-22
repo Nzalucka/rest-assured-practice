@@ -20,6 +20,17 @@ jobs:
           distribution: 'temurin'
 
       - name: Run tests
-        run: mvn test -Dtest=GetUsersTest,GetUsersListTest,CreateUserTest,UpdateUserTest,PatchUserTest,DeleteUserTest,NegativeTests
-        env:
-          API_KEY: ${{ secrets.API_KEY }}
+        run: |
+          mvn test -Dtest=GetUsersTest
+          sleep 60
+          mvn test -Dtest=GetUsersListTest
+          sleep 60
+          mvn test -Dtest=CreateUserTest
+          sleep 60
+          mvn test -Dtest=UpdateUserTest
+          sleep 60
+          mvn test -Dtest=DeleteUserTest
+          sleep 60
+          mvn test -Dtest=PatchUserTest
+          sleep 60
+          mvn test -Dtest=NegativeTests
