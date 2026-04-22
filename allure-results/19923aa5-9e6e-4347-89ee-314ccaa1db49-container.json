@@ -1,0 +1,1 @@
+{"uuid":"19923aa5-9e6e-4347-89ee-314ccaa1db49","name":"tests.DeleteUserTest","children":["a2aff19b-7e0a-4fe7-a720-9bcd45790a3a"],"befores":[{"name":"setUp","status":"passed","stage":"finished","description":"","steps":[],"attachments":[],"parameters":[],"start":1775897802496,"stop":1775897802690}],"afters":[],"start":1775897802482,"stop":1775897803249}
