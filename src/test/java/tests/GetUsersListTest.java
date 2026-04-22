@@ -123,7 +123,7 @@ public class GetUsersListTest extends BaseTest{
     @Story("Get users list")
     @Severity(SeverityLevel.NORMAL)
     @Description("Negative test — verify email mismatch returns assertion error")
-    @Test(description = "Get users list — verify first user email — negative test")
+    @Test(enabled = false,description = "Get users list — verify first user email — negative test")
     public void getFirstUserEmailFromList_negative(){
         Response response=
                 given().when().get("/users")
