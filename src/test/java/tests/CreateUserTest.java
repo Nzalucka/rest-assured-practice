@@ -30,6 +30,19 @@ public class CreateUserTest extends BaseTest{
     }
 
     @Story("Create user")
+    @Severity(SeverityLevel.NORMAL)
+    @Description("Verify POST /users using ResponseSpecification")
+    @Test(description = "Create user — verify using response spec")
+    public void createUserWithResponseSpec() {
+        given()
+                .body(TestData.createUserBody())
+                .when()
+                .post("/users")
+                .then()
+                .spec(postResponseSpec);
+    }
+
+    @Story("Create user")
     @Severity(SeverityLevel.CRITICAL)
     @Description("Verify that POST /users returns name in response")
     @Test(description = "Create user — verify name in response")
@@ -46,6 +59,7 @@ public class CreateUserTest extends BaseTest{
                 .extract().response();
 
         String name = response.jsonPath().getString("name");
+
         assertEquals(name, "Natalia", "Name should be Natalia");
     }
 

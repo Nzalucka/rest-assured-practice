@@ -67,6 +67,18 @@ public class DeleteUserTest extends BaseTest{
 
     @Story("Delete user")
     @Severity(SeverityLevel.NORMAL)
+    @Description("Verify DELETE /users/2 using ResponseSpecification")
+    @Test(description = "Delete user — verify using response spec")
+    public void deleteUserWithResponseSpec() {
+        given()
+                .when()
+                .delete("/users/2")
+                .then()
+                .spec(deleteResponseSpec);
+    }
+
+    @Story("Delete user")
+    @Severity(SeverityLevel.NORMAL)
     @Description("Verify that DELETE /users/2 responds in under 1 second")
     @Test(description = "Delete user — verify response time under 3 seconds")
     public void deleteUserResponseTime() {
