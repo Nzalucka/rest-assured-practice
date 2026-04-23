@@ -91,4 +91,5 @@ public class DeleteUserTest extends BaseTest{
                 .extract().response();
         System.out.println("Response time: "+response.getTime()+" ms");
     }
+
 }
