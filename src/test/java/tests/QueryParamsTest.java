@@ -46,6 +46,20 @@ public class QueryParamsTest extends BaseTest {
         System.out.println(perPage);
         assertEquals(perPage,3,"per page=3");
     }
+    @Story("Query params")
+    @Severity(SeverityLevel.NORMAL)
+    @Description("Verify GET /users/{id} with path param id=3")
+    @Test(description = "Get user by path param id=3")
+    public void getUserByPathParam() {
+        Response response=
+                given()
+                        .pathParam("id",3)
+                        .when().get("/users/{id}")
+                        .then().spec(responseSpec).extract().response();
 
+        int id=response.jsonPath().getInt("data.id");
+        System.out.println(id);
+        assertEquals(id,3,"id should be 3");
+    }
 
 }
