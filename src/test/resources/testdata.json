@@ -1,6 +1,6 @@
 
 [
-  {"name": "Natalia", "job": "QA Engineer"},
-  {"name": "Anna", "job": "Developer"},
-  {"name": "Tomek", "job": "Project Manager"}
+  {"name": "Natalia", "job": "QA Engineer","id": 1},
+  {"name": "Anna", "job": "Developer","id": 2},
+  {"name": "Tomek", "job": "Project Manager","id": 3}
 ]

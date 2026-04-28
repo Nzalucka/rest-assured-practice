@@ -5,6 +5,7 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Story;
 import io.restassured.response.Response;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import static io.restassured.RestAssured.given;
@@ -81,5 +82,49 @@ public class QueryParamsTest extends BaseTest {
         assertEquals(per_page, 3, "per_page should be 3");
     }
 
+    @DataProvider(name = "userIds")
+    public Object [][]userIds (){
 
-}
+        return new Object [][]{
+                {1},
+                {2},
+                {3}};
+        }
+
+        @Story("Path params")
+        @Severity(SeverityLevel.NORMAL)
+        @Description("Verify GET /users/{id} with path param using DataProvider")
+        @Test(description = "Get user by path param — DataProvider", dataProvider = "userIds")
+        public void getUserByPathParamDataProvider(int id){
+            Response response =
+                    given().pathParam("id",id)
+                            .when().get("/users/{id}")
+                            .then()
+                            .spec(responseSpec)
+                            .extract().response();
+
+            int userId = response.jsonPath().getInt("data.id");
+            System.out.println("id: " + userId);
+    assertEquals(userId,id,"id should be " + id);
+        }
+
+    @Story("Path params")
+    @Severity(SeverityLevel.NORMAL)
+    @Description("Verify GET /users/{id} with path param from JSON DataProvider")
+    @Test(description = "Get user by path param — JSON DataProvider", dataProvider = "userIds")
+    public void getUserByPathParamJson(int id) {
+        Response response =
+                given()
+                        .pathParam("id", id)
+                        .when()
+                        .get("/users/{id}")
+                        .then()
+                        .spec(responseSpec)
+                        .extract().response();
+
+        int userId = response.jsonPath().getInt("data.id");
+        assertEquals(userId, id, "id should be " + id);
+    }
+    }
+
+

@@ -10,9 +10,10 @@ import java.util.Map;
 
 public class JsonReader {
     private static final String FILE_PATH = "src/test/resources/testdata.json";
+    private static final ObjectMapper mapper = new ObjectMapper();
 
     public static String getData(String key) throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
+       //ObjectMapper mapper = new ObjectMapper();
         JsonNode node = mapper.readTree(new File(FILE_PATH));
         return node.get(key).asText();
     }
@@ -23,7 +24,7 @@ public class JsonReader {
         return body;
     }
     public static Object[][] getUsersData() throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
+        //ObjectMapper mapper = new ObjectMapper();
         JsonNode array = mapper.readTree(new File(FILE_PATH));
 
         Object[][] data = new Object[array.size()][2];
@@ -32,5 +33,13 @@ public class JsonReader {
             data[i][1] = array.get(i).get("job").asText();
         }
         return data;
+    }
+    public static Object [][]getUserIds() throws IOException{
+        JsonNode array=mapper.readTree(new File(FILE_PATH));
+        Object [][]id=new Object[array.size()][1];
+        for (int i=0;i< array.size();i++){
+            id[i][0] = array.get(i).get("id").asInt();
+        }
+        return id;
     }
 }
