@@ -3,6 +3,7 @@ package tests;
 import io.restassured.RestAssured;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.specification.ResponseSpecification;
+import org.checkerframework.checker.index.qual.LessThan;
 import org.testng.annotations.BeforeClass;
 
 import static io.restassured.RestAssured.given;
@@ -13,6 +14,8 @@ public class BaseTest {
     public static ResponseSpecification responseSpec;
     public static ResponseSpecification postResponseSpec;
     public static ResponseSpecification deleteResponseSpec;
+    public static ResponseSpecification basicResponseSpec;
+
 
 
     @BeforeClass
@@ -23,6 +26,7 @@ public class BaseTest {
                 .header("x-api-key", "reqres_a9db5cb7d8c849029d3ba03cf8e6ddb5")
                         .contentType("application/json");
 
+        // GET, PUT, PATCH — returns data object, status 200
         responseSpec=new ResponseSpecBuilder()
                 .expectStatusCode(200)
                 .expectResponseTime(lessThan(3000L))
@@ -31,6 +35,7 @@ public class BaseTest {
                 .expectBody("data", notNullValue())
                 .build();
 
+        // POST creating resource — status 201
         postResponseSpec=new ResponseSpecBuilder()
                 .expectStatusCode(201)
                 .expectResponseTime(lessThan(3000L))
@@ -39,12 +44,21 @@ public class BaseTest {
                 .expectBody("createdAt",notNullValue())
                 .build();
 
+        // DELETE — no content, status 204
         deleteResponseSpec = new ResponseSpecBuilder()
                 .expectStatusCode(204)
                 .expectResponseTime(lessThan(3000L))
                 .build();
 
+        // POST login, other endpoints without data — status 200
+        basicResponseSpec=new ResponseSpecBuilder()
+                .expectStatusCode(200)
+                .expectResponseTime(lessThan(3000L))
+                .expectContentType("application/json")
+                .build();
+
     }
+
 
 
 

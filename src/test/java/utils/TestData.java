@@ -16,6 +16,12 @@ public class TestData {
         body.put("job", job);
         return body;
     }
+    public static Map<String,String>loginBody(){
+        Map<String,String>body=new HashMap<>();
+        body.put("email", "eve.holt@reqres.in");
+        body.put("password", "cityslicka");
+        return body;
+    }
 
 
 
