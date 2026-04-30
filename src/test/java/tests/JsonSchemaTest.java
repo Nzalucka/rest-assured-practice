@@ -5,6 +5,7 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Story;
 import org.testng.annotations.Test;
+import utils.TestData;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
@@ -34,5 +35,18 @@ public class JsonSchemaTest extends BaseTest {
                 .body(matchesJsonSchemaInClasspath("schemas/users-list-schema.json"));
 
     }
+    @Story("JSON Schema validation")
+    @Severity(SeverityLevel.NORMAL)
+    @Description("Verify POST /users response matches JSON schema")
+    @Test(description = "Create user — verify JSON schema")
+    public void createUserMatchesSchema(){
+        given()
+                .body(TestData.createUserBody())
+                .when().post("/users")
+                .then().spec(postResponseSpec)
+                .body(matchesJsonSchemaInClasspath("schemas/create-user-schema.json"));
+    }
+
+
 
 }
