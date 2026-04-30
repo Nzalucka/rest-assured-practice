@@ -25,4 +25,25 @@ public class AuthTest extends BaseTest{
 
 
     }
+
+    @Story("Authentication")
+    @Severity(SeverityLevel.CRITICAL)
+    @Description("Verify login returns token and token can be used in subsequent request")
+    @Test(description = "Login — get token and use it in next request")
+    public void loginAndUseToken() {
+        String token=
+                given()
+                        .body(TestData.loginBody())
+                        .when().post("/login")
+                        .then().spec(basicResponseSpec)
+                        .extract().path("token");
+        System.out.println("token"+token);
+
+        given()
+                .header("Authorization", "Bearer "+token)
+                .when()
+                .get("/users/2")
+                .then().spec(responseSpec);
+
+    }
 }
