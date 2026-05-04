@@ -1,5 +1,7 @@
 package utils;
 
+import model.User;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,6 +23,9 @@ public class TestData {
         body.put("email", "eve.holt@reqres.in");
         body.put("password", "cityslicka");
         return body;
+    }
+    public static User createUserBodyPojo(){
+        return new User("Natalia", "QA Engineer");
     }
 
 
