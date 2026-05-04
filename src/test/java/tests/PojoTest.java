@@ -5,6 +5,7 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Story;
 import io.restassured.response.Response;
+import model.CreateUserResponse;
 import model.UserResponse;
 import org.testng.annotations.Test;
 import utils.TestData;
@@ -57,5 +58,26 @@ public class PojoTest extends BaseTest{
         System.out.println("firstName: " + user.getFirstName());
         System.out.println("lastName: " + user.getLastName());
         System.out.println("avatar: " + user.getAvatar());
+    }
+    @Story("POJO")
+    @Severity(SeverityLevel.NORMAL)
+    @Description("Verify POST /users response deserialized to CreateUserResponse POJO")
+    @Test(description = "Create user — deserialize response to POJO")
+    public void createUserWithPojoDeserialization() {
+
+        CreateUserResponse created=
+                given()
+                        .body(TestData.createUserBodyPojo())
+                        .when()
+                        .post("/users")
+                        .then().spec(postResponseSpec)
+                        .extract().response()
+                        .as(CreateUserResponse.class);
+
+        System.out.println("id: " + created.getId());
+        System.out.println("createdAt: " + created.getCreatedAt());
+        assertNotNull(created.getId());
+        assertNotNull(created.getCreatedAt());
+
     }
     }
