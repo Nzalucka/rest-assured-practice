@@ -2,6 +2,8 @@ package tests;
 
 import io.restassured.RestAssured;
 import io.restassured.builder.ResponseSpecBuilder;
+import io.restassured.filter.log.RequestLoggingFilter;
+import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.specification.ResponseSpecification;
 import org.checkerframework.checker.index.qual.LessThan;
 import org.testng.annotations.BeforeClass;
@@ -24,7 +26,10 @@ public class BaseTest {
         RestAssured.requestSpecification =
                 given()
                 .header("x-api-key", "reqres_a9db5cb7d8c849029d3ba03cf8e6ddb5")
-                        .contentType("application/json");
+                        .contentType("application/json")
+                        ;
+        RestAssured.filters(new RequestLoggingFilter(),new ResponseLoggingFilter());
+
 
         // GET, PUT, PATCH — returns data object, status 200
         responseSpec=new ResponseSpecBuilder()
