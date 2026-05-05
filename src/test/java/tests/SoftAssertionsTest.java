@@ -5,9 +5,11 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Story;
 import io.restassured.response.Response;
+import model.CreateUserResponse;
 import model.UserResponse;
 import org.assertj.core.api.SoftAssertions;
 import org.testng.annotations.Test;
+import utils.TestData;
 
 import static io.restassured.RestAssured.given;
 
@@ -37,5 +39,27 @@ public class SoftAssertionsTest extends BaseTest{
 
         });
 
-    }
-}
+        }
+    @Story("Soft Assertions")
+    @Severity(SeverityLevel.NORMAL)
+    @Description("Verify POST /users using soft assertions")
+    @Test(description = "Create user — verify fields with soft assertions")
+    public void createUserWithSoftAssertions() {
+
+        CreateUserResponse createdResponse=
+                given()
+                        .body(TestData.createUserBodyPojo())
+                        .when().post("/users")
+                        .then()
+                        .spec(postResponseSpec)
+                        .extract().response()
+                        .as(CreateUserResponse.class);
+
+        SoftAssertions.assertSoftly(soft-> {
+            soft.assertThat(createdResponse.getId()).isNotNull();
+            soft.assertThat(createdResponse.getCreatedAt()).isNotNull();
+
+
+        });
+    }}
+
