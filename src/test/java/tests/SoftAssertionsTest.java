@@ -31,7 +31,7 @@ public class SoftAssertionsTest extends BaseTest{
                 .getObject("data",UserResponse.class);
 
         SoftAssertions.assertSoftly(soft ->{
-            soft.assertThat(user.getId()).isEqualTo(2);
+            soft.assertThat(user.getId()).as("user should be 2 not 3").isEqualTo(2);
             soft.assertThat(user.getEmail()).isEqualTo("janet.weaver@reqres.in");
             soft.assertThat(user.getFirstName()).isEqualTo("Janet");
             soft.assertThat(user.getLastName()).isEqualTo("Weaver");
