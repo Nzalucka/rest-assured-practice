@@ -24,4 +24,24 @@ public class CookiesTest extends BaseTest{
                 .body("cookies.session",equalTo("abc123"));
 
     }
+    @Story("Cookies")
+    @Severity(SeverityLevel.NORMAL)
+    @Description("Get cookie from response and use in next request")
+    @Test(description = "Get cookie and use in next request")
+    public void getCookieAndUseInNextRequest() {
+        String session=
+                given()
+                        .baseUri("https://httpbin.org")
+                        .redirects().follow(false)
+                        .when().get("/cookies/set?session=xyz789")
+                        .then().extract().cookie("session");
+        System.out.println("Cookie: "+session);
+
+        given().baseUri("https://httpbin.org")
+                .cookie("session",session)
+                .when().get("/cookies")
+                .then().statusCode(200)
+                .body("cookies.session",equalTo("xyz789"));
+    }
+
 }
