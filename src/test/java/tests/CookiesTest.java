@@ -43,5 +43,17 @@ public class CookiesTest extends BaseTest{
                 .then().statusCode(200)
                 .body("cookies.session",equalTo("xyz789"));
     }
+    @Story("Cookies")
+    @Severity(SeverityLevel.NORMAL)
+    @Description("Set cookie via path param")
+    @Test(description = "Set cookie via path param")
+    public void setCookieByPathParam() {
+        given()
+                .baseUri("https://httpbin.org")
+                .when()
+                .get("/cookies/set/session/abc123")
+                .then().statusCode(200);
+
+    }
 
 }
