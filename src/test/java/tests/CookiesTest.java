@@ -55,5 +55,17 @@ public class CookiesTest extends BaseTest{
                 .then().statusCode(200);
 
     }
+    @Story("Cookies")
+    @Severity(SeverityLevel.NORMAL)
+    @Description("Delete cookie and verify it's removed")
+    @Test(description = "Delete cookie — verify empty cookies")
+    public void deleteCookie() {
+        given()
+                .baseUri("https://httpbin.org")
+                .when().get("/cookies/delete?session=")
+                .then().statusCode(200)
+                .body("cookies",equalTo(new java.util.HashMap<>()));
+
+    }
 
 }
