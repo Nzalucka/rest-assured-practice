@@ -10,7 +10,7 @@ import org.testng.annotations.Test;
 import static io.restassured.RestAssured.given;
 import static org.testng.Assert.assertNotNull;
 
-public class OAuthTest {
+public class OAuthTest extends SpotifyBaseTest{
     private static final String CLIENT_ID=System.getenv("SPOTIFY_CLIENT_ID");
     private static final String CLIENT_SECRET = System.getenv("SPOTIFY_CLIENT_SECRET");
 
@@ -20,16 +20,6 @@ public class OAuthTest {
     @Description("Verify Spotify OAuth 2.0 Client Credentials flow returns access token")
     @Test(description = "Spotify OAuth — get access token")
     public void getSpotifyToken(){
-        String token=
-                given()
-                        .baseUri("https://accounts.spotify.com")
-                        .contentType("application/x-www-form-urlencoded")
-                        .formParam("grant_type", "client_credentials")
-                        .formParam("client_id", CLIENT_ID)
-                        .formParam("client_secret", CLIENT_SECRET)
-                        .when().post("/api/token")
-                        .then().statusCode(200)
-                        .extract().path("access_token");
 
 
         System.out.println("token "+ token);
