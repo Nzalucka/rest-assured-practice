@@ -38,7 +38,8 @@ public class SearchTest extends SpotifyBaseTest{
                 .body("artists.items.find {it.id=='4gzpq5DPGxSnKTe4SA8HAU'}.type",equalTo("artist"))
                            .extract().response();
 
-        Map<String,Object>coldplay=response.jsonPath().getMap("artists.items.find { it.id == '4gzpq5DPGxSnKTe4SA8HAU' }");
+        Map<String,Object>coldplay=response.jsonPath()
+                .getMap("artists.items.find { it.id == '4gzpq5DPGxSnKTe4SA8HAU' }");
         System.out.println("coldplay: "+coldplay);
 
 
