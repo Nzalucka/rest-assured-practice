@@ -5,4 +5,5 @@ public class SpotifyTestData {
     public static final String SEARCH_QUERY = "Coldplay";
     public static final String BASE_API_URI = "https://api.spotify.com";
     public static final String COLDPLAY_ALBUM_ID = "5SGtrmYbIo0Dsg4kJ4qjM6";
+    public static final String PLAYLIST_ID = "4s1kXKyvA1bmD7hO8tAElu";
 }
