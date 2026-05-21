@@ -6,6 +6,7 @@ import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Story;
 import io.restassured.response.Response;
 import org.testng.annotations.Test;
+import spotify.model.ArtistResponse;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
@@ -31,5 +32,13 @@ public class getArtist extends SpotifyBaseTest{
         System.out.println("Artist name: " + response.jsonPath().getString("name"));
         System.out.println("Artist id: " + response.jsonPath().getString("id"));
         System.out.println("Artist type: " + response.jsonPath().getString("type"));
+
+        // POJO deserialization
+        ArtistResponse artist=response.as(ArtistResponse.class);
+        System.out.println("=== POJO ===");
+        System.out.println("name:"+artist.getName());
+        System.out.println("id: "+artist.getId());
+        System.out.println("Type: "+artist.getType());
+        System.out.println(" ");
     }
 }
