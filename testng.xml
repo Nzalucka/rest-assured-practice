@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Spotify Tests" parallel="classes" thread-count="3">
+    <test name="Spotify">
+        <classes>
+            <class name="spotify.OAuthTest"/>
+            <class name="spotify.SearchTest"/>
+            <class name="spotify.getArtist"/>
+            <class name="spotify.AlbumTest"/>
+            <class name="spotify.PlaylistTest"/>
+            <class name="spotify.TrackTest"/>
+            <class name="spotify.ArtistAlbumsTest"/>
+            <class name="spotify.AlbumTracksTest"/>
+            <class name="spotify.NegativeTests"/>
+        </classes>
+    </test>
+</suite>
