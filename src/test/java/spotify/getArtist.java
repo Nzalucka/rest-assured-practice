@@ -4,12 +4,16 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Story;
+import io.restassured.module.jsv.JsonSchemaValidator;
 import io.restassured.response.Response;
 import org.testng.annotations.Test;
 import spotify.model.ArtistResponse;
 
 import static io.restassured.RestAssured.given;
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 import static org.hamcrest.Matchers.equalTo;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNotNull;
 
 public class getArtist extends SpotifyBaseTest{
     @Story("Spotify Artist")
@@ -40,5 +44,36 @@ public class getArtist extends SpotifyBaseTest{
         System.out.println("id: "+artist.getId());
         System.out.println("Type: "+artist.getType());
         System.out.println(" ");
+    }
+
+
+    @Story("Spotify Artist")
+    @Severity(SeverityLevel.NORMAL)
+    @Description("Get Coldplay artist using POJO deserialization")
+    @Test(description = "Get artist — verify data using POJO")
+    public void getArtistWithPojo(){
+        ArtistResponse artist=
+                given()
+                        .spec(requestSpecification)
+                        .when().get("/artists/"+SpotifyTestData.COLDPLAY_ARTIST_ID)
+                        .then().spec(responseSpecification).statusCode(200)
+                        .extract().response().as(ArtistResponse.class);
+        assertEquals(artist.getName(), "Coldplay");
+        assertEquals(artist.getType(), "artist");
+        assertNotNull(artist.getId());
+    }
+
+    @Story("Spotify Artist")
+    @Severity(SeverityLevel.NORMAL)
+    @Description("Verify getArtist response matches JSON schema")
+    @Test(description = "Get artist — verify JSON schema")
+    public void getArtist_matchesSchema() {
+        given()
+                .spec(requestSpecification)
+                .when().get("/artists/"+SpotifyTestData.COLDPLAY_ARTIST_ID)
+                .then().spec(responseSpecification)
+                .statusCode(200)
+                .body(matchesJsonSchemaInClasspath
+                        ("schemas/spotify/schemas/artist-schema.json"));
     }
 }

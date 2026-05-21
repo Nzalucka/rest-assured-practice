@@ -1,0 +1,38 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": ["name", "type", "uri", "external_urls", "href","images"],
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string"
+    },
+    "uri": {
+      "type": "string"
+    },
+
+    "href": {
+      "type": "string", "format": "uri"
+    },
+    "external_urls": {
+      "type": "object",
+      "properties": {
+        "spotify": {"type": "string","format": "uri"}
+      }
+    },
+    "images": {
+      "type": "array",
+      "items":{
+        "type": "object"
+      ,
+      "properties": {
+        "url": {"type": "string","format": "uri"},
+        "height": {"type": "integer"},
+        "weight": {"type": "integer"}
+
+      }
+    }
+
+  }}}
