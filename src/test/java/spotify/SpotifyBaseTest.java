@@ -30,9 +30,9 @@ public class SpotifyBaseTest {
 
         String clientId = props.getProperty("spotify.client.id");
         String clientSecret = props.getProperty("spotify.client.secret");
+        String refreshToken = props.getProperty("spotify.refresh_token");
 
-        System.out.println("CLIENT_ID: " + clientId);
-        System.out.println("CLIENT_SECRET: " + clientSecret);
+        String accessToken = refreshAccessToken(clientId, clientSecret, refreshToken);
 
         token = given()
                 .baseUri("https://accounts.spotify.com")
@@ -45,7 +45,7 @@ public class SpotifyBaseTest {
 
         requestSpecification=new RequestSpecBuilder()
             .setBaseUri("https://api.spotify.com")
-                .addHeader("Authorization", "Bearer " + token)
+                .addHeader("Authorization", "Bearer " + accessToken)
                 .setBasePath("/v1")
                 .setContentType(ContentType.JSON)
                 .log(LogDetail.ALL)
@@ -58,5 +58,16 @@ responseSpecification=new ResponseSpecBuilder()
 
         System.out.println("Token: " + token);
 
+    }
+    private String refreshAccessToken(String clientId, String clientSecret, String refreshToken) {
+        return given()
+                .baseUri("https://accounts.spotify.com")
+                .contentType("application/x-www-form-urlencoded")
+                .auth().preemptive().basic(clientId, clientSecret)
+                .formParam("grant_type", "refresh_token")
+                .formParam("refresh_token", refreshToken)
+                .when().post("/api/token")
+                .then().statusCode(200)
+                .extract().path("access_token");
     }
 }
