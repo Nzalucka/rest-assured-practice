@@ -61,5 +61,7 @@ public class SoftAssertionsTest extends BaseTest{
 
 
         });
-    }}
+    }
+
+}
 

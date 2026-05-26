@@ -6,6 +6,7 @@ import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Story;
 import io.restassured.module.jsv.JsonSchemaValidator;
 import io.restassured.response.Response;
+import org.assertj.core.api.SoftAssertions;
 import org.testng.annotations.Test;
 import spotify.model.ArtistResponse;
 
@@ -75,5 +76,28 @@ public class getArtist extends SpotifyBaseTest{
                 .statusCode(200)
                 .body(matchesJsonSchemaInClasspath
                         ("schemas/spotify/schemas/artist-schema.json"));
+    }
+    @Story("Spotify Artist")
+    @Severity(SeverityLevel.NORMAL)
+    @Description("Get Coldplay artist — soft assertions")
+    @Test(description = "Get artist — verify all fields with soft assertions")
+    public void getArtistSoftAssertions() {
+        System.out.println("Token: " + token);
+        ArtistResponse artist=
+                given()
+                        .spec(requestSpecification)
+                        .when().get("/artists/"+ SpotifyTestData.COLDPLAY_ARTIST_ID)
+                        .then().spec(responseSpecification)
+                        .statusCode(200)
+                        .extract().response().as(ArtistResponse.class);
+
+        SoftAssertions soft=new SoftAssertions();
+        soft.assertThat(artist.getId()).isEqualTo(SpotifyTestData.COLDPLAY_ARTIST_ID);
+        soft.assertThat(artist.getName()).isEqualTo("Coldplay");
+        soft.assertThat(artist.getType()).isEqualTo("artist");
+        soft.assertThat(artist.getType()).isEqualTo("artist");
+        soft.assertThat(artist.getUri()).isEqualTo("spotify:artist:" + SpotifyTestData.COLDPLAY_ARTIST_ID);
+        soft.assertAll();
+
     }
 }
