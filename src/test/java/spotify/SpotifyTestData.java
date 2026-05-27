@@ -9,6 +9,7 @@ public class SpotifyTestData {
     public static final String COLDPLAY_ALBUM_ID = "5SGtrmYbIo0Dsg4kJ4qjM6";
     public static final String PLAYLIST_ID = "4s1kXKyvA1bmD7hO8tAElu";
     public static final String TRACK_ID = "33koOQs551ijjVmLbmrcDc";
+    public static final String TEST_PLAYLIST_ID = "46LqDd851Hk68mR5u4fgYR";
 
     public static PlaylistBody createPlaylistBody(){
         return new PlaylistBody("Natalia playlist",
