@@ -9,6 +9,7 @@ import model.RemoveTracksBody;
 import model.TrackUri;
 import org.testng.annotations.Test;
 import spotify.model.AddTracksBody;
+import spotify.model.FollowPlaylistBody;
 import spotify.model.PlaylistBody;
 
 import java.util.List;
@@ -76,4 +77,16 @@ public class PlaylistCRUDTest extends SpotifyBaseTest{
                 .when().delete("/playlists/"+SpotifyTestData.TEST_PLAYLIST_ID+"/items")
                 .then().statusCode(200);
     }
+    @Story("Spotify Playlist CRUD")
+    @Severity(SeverityLevel.NORMAL)
+    @Description("Follow a playlist")
+    @Test(description = "Follow playlist — verify 200")
+    public void followPlaylist() {
+        given()
+                .spec(requestSpecification)
+                .body(new FollowPlaylistBody(false))
+                .when().put("/playlists/" + SpotifyTestData.TEST_PLAYLIST_ID + "/followers")
+                .then().statusCode(200);
+    }
+
 }
