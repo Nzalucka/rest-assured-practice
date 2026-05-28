@@ -5,8 +5,13 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Story;
 import io.restassured.response.Response;
+import model.RemoveTracksBody;
+import model.TrackUri;
 import org.testng.annotations.Test;
+import spotify.model.AddTracksBody;
 import spotify.model.PlaylistBody;
+
+import java.util.List;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
@@ -45,5 +50,30 @@ public class PlaylistCRUDTest extends SpotifyBaseTest{
                 .when().put("/playlists/"+SpotifyTestData.TEST_PLAYLIST_ID)
                 .then().statusCode(200);
 
+    }
+
+    @Story("Spotify Playlist CRUD")
+    @Severity(SeverityLevel.NORMAL)
+    @Description("Add track to playlist")
+    @Test(description = "Add tracks — verify 201")
+    public void addTracksToPlaylist() {
+
+        given()
+                .spec(requestSpecification)
+        .body(new AddTracksBody(0,List.of(SpotifyTestData.TRACK_URI,SpotifyTestData.TRACK_URI_2)))
+        .when().post("/playlists/" + SpotifyTestData.TEST_PLAYLIST_ID + "/items")
+        .then().statusCode(201);
+    }
+
+    @Story("Spotify Playlist CRUD")
+    @Severity(SeverityLevel.NORMAL)
+    @Description("Remove track from playlist")
+    @Test(description = "Remove tracks — verify 200")
+    public void removeTracksFromPlaylist() {
+        given()
+                .spec(requestSpecification)
+                .body(new RemoveTracksBody(List.of(new TrackUri(SpotifyTestData.TRACK_URI))))
+                .when().delete("/playlists/"+SpotifyTestData.TEST_PLAYLIST_ID+"/items")
+                .then().statusCode(200);
     }
 }

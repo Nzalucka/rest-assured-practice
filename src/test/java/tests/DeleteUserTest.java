@@ -91,5 +91,12 @@ public class DeleteUserTest extends BaseTest{
                 .extract().response();
         System.out.println("Response time: "+response.getTime()+" ms");
     }
+    @Story("Spotify Playlist CRUD")
+    @Severity(SeverityLevel.NORMAL)
+    @Description("Add track to playlist")
+    @Test(description = "Add tracks — verify 201")
+    public void addTracksToPlaylist() {
+
+    }
 
 }
