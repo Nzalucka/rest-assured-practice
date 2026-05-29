@@ -1,4 +1,4 @@
-package model;
+package spotify.model;
 
 import java.util.List;
 

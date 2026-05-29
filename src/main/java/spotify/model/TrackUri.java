@@ -1,6 +1,4 @@
-package model;
-
-import java.awt.*;
+package spotify.model;
 
 public class TrackUri {
     private String uri;

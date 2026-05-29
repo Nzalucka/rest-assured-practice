@@ -5,8 +5,8 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Story;
 import io.restassured.response.Response;
-import model.RemoveTracksBody;
-import model.TrackUri;
+import spotify.model.RemoveTracksBody;
+import spotify.model.TrackUri;
 import org.testng.annotations.Test;
 import spotify.model.AddTracksBody;
 import spotify.model.FollowPlaylistBody;
@@ -63,7 +63,9 @@ public class PlaylistCRUDTest extends SpotifyBaseTest{
                 .spec(requestSpecification)
         .body(new AddTracksBody(0,List.of(SpotifyTestData.TRACK_URI,SpotifyTestData.TRACK_URI_2)))
         .when().post("/playlists/" + SpotifyTestData.TEST_PLAYLIST_ID + "/items")
-        .then().statusCode(201);
+        .then().
+    spec(responseSpecification).statusCode(201)
+                .body("snapshot_id", notNullValue());
     }
 
     @Story("Spotify Playlist CRUD")
