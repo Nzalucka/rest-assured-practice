@@ -12,6 +12,7 @@
             <class name="spotify.ArtistAlbumsTest"/>
             <class name="spotify.AlbumTracksTest"/>
             <class name="spotify.NegativeTests"/>
+            <class name="spotify.PlaylistCRUDTest"/>
         </classes>
     </test>
 </suite>

@@ -12,7 +12,7 @@ import spotify.model.ArtistResponse;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
-import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.*;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
 
@@ -99,5 +99,21 @@ public class getArtist extends SpotifyBaseTest{
         soft.assertThat(artist.getUri()).isEqualTo("spotify:artist:" + SpotifyTestData.COLDPLAY_ARTIST_ID);
         soft.assertAll();
 
+    }
+    @Test(description = "Get artist — verify string matchers")
+    public void getArtist_stringMatchers() {
+        given()
+                .spec(requestSpecification)
+                .when().get("/artists/" + SpotifyTestData.COLDPLAY_ARTIST_ID)
+                .then().log().all().spec(responseSpecification)
+                .statusCode(200)
+                .body("uri",startsWith("spotify:artist:"))
+                .body("external_urls.spotify",containsString("spotify.com"))
+                .body("name",not(equalTo("")))
+                .body("images", not(empty()))
+                .body("type", equalTo("artist"))
+                .body("images",hasSize(greaterThan(0)))
+                .body("href", containsString("api.spotify.com"))
+                ;
     }
 }
