@@ -12,6 +12,7 @@ import spotify.model.ArtistResponse;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
@@ -116,4 +117,33 @@ public class getArtist extends SpotifyBaseTest{
                 .body("href", containsString("api.spotify.com"))
                 ;
     }
+    @Test(description = "Get artist — body vs assertThat comparison")
+    public void getArtist_bodyVsAssertThat() {
+
+        // Sposób 1 — bez POJO, .body() z Hamcrest:
+        given()
+                .spec(requestSpecification)
+                .when().get("/artists/" + SpotifyTestData.COLDPLAY_ARTIST_ID)
+                .then().spec(responseSpecification)
+                .statusCode(200)
+                .body("name", equalTo("Coldplay"))
+                .body("type", equalTo("artist"))
+                .body("uri", startsWith("spotify:artist:"));
+
+        // Sposób 2 — z POJO, assertThat z AssertJ:
+        ArtistResponse artist = given()
+                .spec(requestSpecification)
+                .when().get("/artists/" + SpotifyTestData.COLDPLAY_ARTIST_ID)
+                .then().spec(responseSpecification)
+                .statusCode(200)
+                .extract().response()
+                .as(ArtistResponse.class);
+
+        assertThat(artist.getName()).isEqualTo("Coldplay");
+        assertThat(artist.getType()).isEqualTo("artist");
+        assertThat(artist.getId()).isNotNull();
+        assertThat(artist.getUri()).startsWith("spotify:artist:");
+    }
+
+
 }
