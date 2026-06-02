@@ -11,7 +11,7 @@ import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.requestSpecification;
 import static org.hamcrest.Matchers.equalTo;
 
-public class NegativeTests extends BaseTest {
+public class NegativeTests extends SpotifyBaseTest {
     @Story("Spotify Negative")
     @Severity(SeverityLevel.NORMAL)
     @Description("Get artist with invalid token returns 401")
@@ -33,6 +33,6 @@ public class NegativeTests extends BaseTest {
     public void getArtist_invalidId(){
         given()
                 .spec(requestSpecification)
-                .when().get("/artists/invalidId123").then().statusCode(403);
+                .when().get("/artists/invalidId123").then().statusCode(400);
     }
 }
