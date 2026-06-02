@@ -144,6 +144,18 @@ public class getArtist extends SpotifyBaseTest{
         assertThat(artist.getId()).isNotNull();
         assertThat(artist.getUri()).startsWith("spotify:artist:");
     }
+    @Story("Spotify Artist")
+    @Severity(SeverityLevel.NORMAL)
+    @Description("Verify response headers for getArtist")
+    @Test(description = "Get artist — verify response headers")
+    public void getArtist_headerValidation() {
+        given()
+                .spec(requestSpecification).when().get("/artists/" + SpotifyTestData.COLDPLAY_ARTIST_ID)
+                .then().spec(responseSpecification)
+                .statusCode(200).header("Content-Type",containsString("application/json"))
+                .header("cache-control",notNullValue())
+                .header("x-content-type-options", equalTo("nosniff"))
+                .header("x-robots-tag", containsString("noindex"));;
 
 
-}
+}}
