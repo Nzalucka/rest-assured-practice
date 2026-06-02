@@ -150,12 +150,22 @@ public class getArtist extends SpotifyBaseTest{
     @Test(description = "Get artist — verify response headers")
     public void getArtist_headerValidation() {
         given()
-                .spec(requestSpecification).when().get("/artists/" + SpotifyTestData.COLDPLAY_ARTIST_ID)
+                .spec(requestSpecification).when()
+                .get("/artists/" + SpotifyTestData.COLDPLAY_ARTIST_ID)
                 .then().spec(responseSpecification)
                 .statusCode(200).header("Content-Type",containsString("application/json"))
                 .header("cache-control",notNullValue())
                 .header("x-content-type-options", equalTo("nosniff"))
-                .header("x-robots-tag", containsString("noindex"));;
+                .header("x-robots-tag", containsString("noindex"));
 
+}
+    @Story("Spotify Artist")
+    @Severity(SeverityLevel.NORMAL)
+    @Description("Verify response time is under 3 seconds")
+    @Test(description = "Get artist — verify response time")
+    public void getArtist_responseTime() {
+        given().spec(requestSpecification).when().get("/artists/" + SpotifyTestData.COLDPLAY_ARTIST_ID)
+                .then().spec(responseSpecification)
+                .statusCode(200).time(lessThan(3000L));
 
-}}
+    }}
