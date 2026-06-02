@@ -17,7 +17,8 @@ public class NegativeTests extends BaseTest{
     @Description("Verify that GET /users/999 returns status 404")
     @Test(description = "Get non-existent user — verify status 404")
     public void getNonExistentUser(){
-        given().when().get("users/999").then().log().body().statusCode(anyOf(equalTo(403), equalTo(404)));
+        given().when().get("users/999").then().log().body()
+                .statusCode(anyOf(equalTo(403), equalTo(404)));
 
     }
     @Story("Negative scenarios")
