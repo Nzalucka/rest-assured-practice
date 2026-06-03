@@ -4,11 +4,12 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Story;
-import io.restassured.module.jsv.JsonSchemaValidator;
 import io.restassured.response.Response;
 import org.assertj.core.api.SoftAssertions;
 import org.testng.annotations.Test;
 import spotify.model.ArtistResponse;
+
+import java.util.List;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
@@ -164,8 +165,48 @@ public class getArtist extends SpotifyBaseTest{
     @Description("Verify response time is under 3 seconds")
     @Test(description = "Get artist — verify response time")
     public void getArtist_responseTime() {
-        given().spec(requestSpecification).when().get("/artists/" + SpotifyTestData.COLDPLAY_ARTIST_ID)
+        given().spec(requestSpecification).when()
+                .get("/artists/" + SpotifyTestData.COLDPLAY_ARTIST_ID)
                 .then().spec(responseSpecification)
                 .statusCode(200).time(lessThan(3000L));
 
+    }
+    @Story("Spotify Artist")
+    @Severity(SeverityLevel.NORMAL)
+    @Description("Verify artist albums contain specific albums")
+    @Test(description = "Get artist albums — verify hasItems")
+    public void getArtistAlbums_hasItems() {
+     Response response=   given().spec(requestSpecification)
+                .queryParam("include_groups", "album")
+                .queryParam("limit", 10)
+                .when().get("/artists/" + SpotifyTestData.COLDPLAY_ARTIST_ID+"/albums")
+                .then().spec(responseSpecification)
+                .statusCode(200)
+                .body("items.name",hasItems("Moon Music","Ghost Stories"))
+             .extract().response();
+
+     List<String>response_name =response.jsonPath().getList("items.name");
+        System.out.println(response_name);
+
+        System.out.println("List size: "+response_name.size());
+        System.out.println("first item: "+response_name.get(0));
+
+        // forEach:
+        System.out.println("All albums:");
+        response_name.forEach(System.out::println);
+
+        // Stream — only albums with  "Music":
+        System.out.println("Albumy z 'Music':");
+        response_name.stream()
+                .filter(name->name.contains("Music"))
+                .forEach(System.out::println);
+
+List<Integer>track_counts=
+        response.jsonPath().getList("items.total_tracks");
+        System.out.println(track_counts);
+
+        System.out.println("Total tracks: "+track_counts.stream().mapToInt(Integer::intValue).sum());
+        System.out.println("Max tracks: "+track_counts.stream().mapToInt(Integer::intValue).max().getAsInt());
+        System.out.println("min tracks: "+track_counts.stream().mapToInt(Integer::intValue).min().getAsInt());
+        System.out.println("All tracks > 0: "+track_counts.stream().allMatch(t->t>0));
     }}
