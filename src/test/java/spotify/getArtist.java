@@ -9,7 +9,11 @@ import org.assertj.core.api.SoftAssertions;
 import org.testng.annotations.Test;
 import spotify.model.ArtistResponse;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
@@ -219,6 +223,16 @@ public class getArtist extends SpotifyBaseTest {
         response_name.stream()
                 .map(name -> name.split(" ")[0])
                 .forEach(System.out::println);
+
+        List<String>musicAlbums=response_name.stream()
+                .filter(name->name.contains("Music"))
+                .collect(Collectors.toList());
+
+        System.out.println("Music albums: " + musicAlbums);
+        System.out.println("Count: " + musicAlbums.size());
+        System.out.println("First music album: " + musicAlbums.get(0));
+        System.out.println("Last music album:"+ musicAlbums.get(musicAlbums.size()-1));
+
     }
 
     @Story("Spotify Artist")
@@ -243,4 +257,36 @@ public class getArtist extends SpotifyBaseTest {
         }
 
     }
+
+    @Story("Spotify Artist")
+    @Severity(SeverityLevel.NORMAL)
+    @Description("Verify distinct stream operation")
+    @Test(description = "Stream — distinct removes duplicates")
+    public void stream_distinct() {
+        List<String>names= Arrays.asList("Moon Music", "Ghost Stories", "Moon Music",
+                "Everyday Life", "Ghost Stories", "Moon Music");
+
+        System.out.println("Before distinct: " + names);
+        System.out.println("Size: " + names.size());
+
+        List<String>unique=names.stream().distinct().collect(Collectors.toList());
+        System.out.println(unique);
+
+        List<String>sorted=names.stream().sorted().collect(Collectors.toList());
+        System.out.println(sorted);
+
+        boolean anyGhost=names.stream().anyMatch(name->name.contains("Ghost"));
+        System.out.println(anyGhost);
+
+        boolean noneEmpty= names.stream().noneMatch(name->name.isEmpty());
+        System.out.println(noneEmpty);
+
+        Optional<String> first = names.stream()
+                .filter(name -> name.contains("Ghost"))
+                .findFirst();
+
+        System.out.println(first);
+    }
+
+
 }
