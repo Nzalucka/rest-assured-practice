@@ -5,10 +5,16 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Story;
 import io.restassured.response.Response;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVRecord;
 import org.assertj.core.api.SoftAssertions;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import spotify.model.ArtistResponse;
 
+import java.io.FileReader;
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -289,4 +295,35 @@ public class getArtist extends SpotifyBaseTest {
     }
 
 
+    @DataProvider(name = "artistData")
+    public Object [][]artistData()throws Exception{
+        List<Object[]> data = new ArrayList<>();
+        Reader reader = new FileReader("src/test/resources/artists.csv");
+        CSVParser csv = new CSVParser(reader,
+                CSVFormat.DEFAULT.withFirstRecordAsHeader());
+        for (CSVRecord record : csv) {
+            data.add(new Object[]{
+                    record.get("artistId"),
+                    record.get("artistName"),
+                    record.get("expectedType")
+            });
+        }
+        return data.toArray(new Object[0][]);
+    }
+    @Story("Spotify Artist")
+    @Severity(SeverityLevel.NORMAL)
+    @Description("Get artist from CSV data")
+    @Test(dataProvider = "artistData",
+            description = "Get artist — CSV data driven test")
+    public void getArtist_csvDataProvider(String artistId, String artistName, String expectedType){
+        given().spec(requestSpecification)
+                .get("/artists/" + artistId)
+                .then().spec(responseSpecification)
+                .statusCode(200)
+                .body("name", equalTo(artistName))
+                .body("type", equalTo(expectedType));
+    }
+
 }
+
+
