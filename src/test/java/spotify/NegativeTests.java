@@ -1,9 +1,6 @@
 package spotify;
 
-import io.qameta.allure.Description;
-import io.qameta.allure.Severity;
-import io.qameta.allure.SeverityLevel;
-import io.qameta.allure.Story;
+import io.qameta.allure.*;
 import org.testng.annotations.Test;
 import tests.BaseTest;
 
@@ -11,6 +8,8 @@ import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.requestSpecification;
 import static org.hamcrest.Matchers.equalTo;
 
+@Epic("Spotify API")
+@Feature("Negative Scenarios")
 public class NegativeTests extends SpotifyBaseTest {
     @Story("Spotify Negative")
     @Severity(SeverityLevel.NORMAL)

@@ -1,9 +1,6 @@
 package spotify;
 
-import io.qameta.allure.Description;
-import io.qameta.allure.Severity;
-import io.qameta.allure.SeverityLevel;
-import io.qameta.allure.Story;
+import io.qameta.allure.*;
 import io.restassured.response.Response;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
@@ -28,6 +25,9 @@ import static org.hamcrest.Matchers.*;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
 
+
+@Epic("Spotify API")
+@Feature("Artist")
 public class getArtist extends SpotifyBaseTest {
     @Story("Spotify Artist")
     @Severity(SeverityLevel.NORMAL)

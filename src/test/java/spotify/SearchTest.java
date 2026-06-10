@@ -1,9 +1,6 @@
 package spotify;
 
-import io.qameta.allure.Description;
-import io.qameta.allure.Severity;
-import io.qameta.allure.SeverityLevel;
-import io.qameta.allure.Story;
+import io.qameta.allure.*;
 import io.restassured.response.Response;
 import org.testng.annotations.Test;
 
@@ -12,6 +9,8 @@ import java.util.Map;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
 
+@Epic("Spotify API")
+@Feature("Search")
 public class SearchTest extends SpotifyBaseTest{
     @Story("Spotify Search")
     @Severity(SeverityLevel.NORMAL)

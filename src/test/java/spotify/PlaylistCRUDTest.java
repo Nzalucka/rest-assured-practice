@@ -1,9 +1,6 @@
 package spotify;
 
-import io.qameta.allure.Description;
-import io.qameta.allure.Severity;
-import io.qameta.allure.SeverityLevel;
-import io.qameta.allure.Story;
+import io.qameta.allure.*;
 import io.restassured.response.Response;
 import spotify.model.RemoveTracksBody;
 import spotify.model.TrackUri;
@@ -18,6 +15,8 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
 
+@Epic("Spotify API")
+@Feature("Playlist")
 public class PlaylistCRUDTest extends SpotifyBaseTest{
 
     @Story("Spotify Playlist CRUD")
