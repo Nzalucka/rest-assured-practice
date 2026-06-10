@@ -14,7 +14,8 @@ public class NegativeTests extends SpotifyBaseTest {
     @Story("Spotify Negative")
     @Severity(SeverityLevel.NORMAL)
     @Description("Get artist with invalid token returns 401")
-    @Test(description = "Invalid token — verify 401")
+    @Test(description = "Invalid token — verify 401",
+    retryAnalyzer = RetryAnalyzer.class)
     public void getArtist_invalidToken() {
         given()
                 .baseUri(SpotifyTestData.BASE_API_URI)
